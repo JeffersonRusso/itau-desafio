@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Inclui os padrões do Spring Boot (cores, etc) -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- Appender Síncrono (Console) que faz o I/O real -->
+    <appender name="CONSOLE_SYNC" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] %cyan(%logger{39}) %yellow([%X{correlationId}]) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender Assíncrono (O Segredo da Performance) -->
+    <appender name="ASYNC_CONSOLE" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- Tamanho da fila em memória (RingBuffer). Aumente se o tráfego for absurdo -->
+        <queueSize>2048</queueSize>
+
+        <!-- 0 = Nunca descartar logs (mesmo se a fila encher, a thread vai bloquear e esperar).
+             Se colocar > 0, ele descarta logs INFO/DEBUG para priorizar ERROR/WARN sob pressão -->
+        <discardingThreshold>0</discardingThreshold>
+
+        <!-- false = Não pega a linha exata do código onde o log ocorreu, pois isso custa muita CPU -->
+        <includeCallerData>false</includeCallerData>
+
+        <!-- Delega a escrita para o appender síncrono -->
+        <appender-ref ref="CONSOLE_SYNC"/>
+    </appender>
+
+    <!-- Root Logger apontando APENAS para o Async -->
+    <root level="INFO">
+        <appender-ref ref="ASYNC_CONSOLE"/>
+    </root>
+
+</configuration>
