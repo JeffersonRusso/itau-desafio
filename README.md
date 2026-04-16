@@ -52,21 +52,27 @@ curl -X POST http://localhost:8080/transactions \
     "currency": "BRL"
   }'
 ```
-Se a transação for aprovada, o sistema retornará os detalhes da operação e o saldo atualizado da conta:
 
+O sistema retornará os detalhes da operação e o saldo atualizado da conta:
 ```json
 {
-  "transaction": {
-    "id": "8e8ae808-b154-48b5-9f3e-553935cc4543",
-    "type": "DEBIT",
-    "amount": { "value": 100.00, "currency": "BRL" },
-    "status": "SUCCEEDED",
-    "timestamp": "2026-04-15T22:31:55-03:00"
-  },
-  "account": {
-    "id": "COLOQUE-SEU-UUID-AQUI",
-    "balance": { "amount": 900.00, "currency": "BRL" }
-  }
+	"transaction": {
+		"id": "8e8ae808-b154-48b5-9f3e-553935cc4543",
+		"type": "DEBIT",
+		"amount": {
+			"value": 100.00,
+			"currency": "BRL"
+		},
+		"status": "SUCCEEDED",
+		"timestamp": "2026-04-15T22:31:55-03:00"
+	},
+	"account": {
+		"id": "446cde51-790d-46bc-8f54-95f5e63482bb",
+		"balance": {
+			"amount": 900.00,
+			"currency": "BRL"
+		}
+	}
 }
 ```
 
@@ -108,4 +114,4 @@ graph TD
     G --> L[Retorno Resposta API]
     C --> L
     K --> L
-```
+```	
