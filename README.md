@@ -109,5 +109,3 @@ graph TD
     C --> L
     K --> L
 ```
-![img.png](img.png)
-
